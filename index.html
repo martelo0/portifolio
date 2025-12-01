@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfólio | Martelo Editor</title>
+    
+    <!-- Tailwind CSS (Estilização) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Configuração do Tailwind para fontes e cores customizadas se necessário -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <!-- Import Map: Permite usar 'import' no navegador puxando de CDNs -->
+    <script type="importmap">
+        {
+            "imports": {
+                "react": "https://esm.sh/react@18.2.0",
+                "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+                "lucide-react": "https://esm.sh/lucide-react@0.263.1"
+            }
+        }
+    </script>
+
+    <!-- Babel Standalone: Compila o JSX do React no navegador -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <style>
+        /* Ajuste fino para scroll suave em toda a página */
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            background-color: #0a0a0a; /* Fallback bg color */
+        }
+    </style>
+</head>
+<body>
+    <!-- Onde o React vai montar o site -->
+    <div id="root"></div>
+
+    <!-- Código da Aplicação -->
+    <script type="text/babel" data-type="module">
+        import React, { useState, useEffect } from 'react';
+        import { createRoot } from 'react-dom/client';
+        import { Play, Scissors, Film, Monitor, ArrowRight, Mail, Instagram, Linkedin, Menu, X, ChevronDown, Smartphone, Globe, ExternalLink, Hammer } from 'lucide-react';
+
+        const Portfolio = () => {
+            const [scrolled, setScrolled] = useState(false);
+            const [menuOpen, setMenuOpen] = useState(false);
+            const [lang, setLang] = useState('pt'); 
+
+            // Detectar idioma do navegador ao iniciar
+            useEffect(() => {
+                const userLang = navigator.language || navigator.userLanguage; 
+                if (userLang) {
+                const code = userLang.toLowerCase();
+                if (code.startsWith('en')) {
+                    setLang('en');
+                } else if (code.startsWith('es')) {
+                    setLang('es');
+                } else if (code.startsWith('pt')) {
+                    setLang('pt');
+                }
+                }
+            }, []);
+
+            // Detectar scroll para mudar o estilo da navbar e visibilidade
+            useEffect(() => {
+                const handleScroll = () => {
+                // A navbar aparece apenas após rolar 50px
+                setScrolled(window.scrollY > 50);
+                };
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
+            // Função para rolar suavemente até a seção com offset do header
+            const scrollToSection = (e, id) => {
+                e.preventDefault();
+                const element = document.getElementById(id);
+                if (element) {
+                const headerOffset = 100; // Compensação para o menu fixo
+                const elementPosition = element.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: "smooth"
+                });
+                setMenuOpen(false); // Fecha o menu mobile se estiver aberto
+                }
+            };
+
+            // Conteúdo traduzido
+            const content = {
+                pt: {
+                nav: ['Serviços', 'Sobre', 'Contato'],
+                hero: {
+                    subtitle: 'Motion Graphics • Shorts • Reels • Edição Dinâmica',
+                    title1: 'RETENÇÃO MÁXIMA',
+                    title2: 'FRAME A FRAME',
+                    ctaProject: 'Ver Portfólio (Drive)',
+                    ctaContact: 'Orçamento'
+                },
+                services: {
+                    items: [
+                    { title: "Motion Graphics", desc: "Títulos animados, VFX e identidades visuais em movimento." },
+                    { title: "Shorts & Reels", desc: "Edição vertical rápida, legendas pop-up e ganchos visuais." },
+                    { title: "Edição Rítmica", desc: "Sincronização musical perfeita e cortes invisíveis." }
+                    ]
+                },
+                about: {
+                    label: '// O Editor',
+                    title1: 'CRIATIVIDADE QUE',
+                    title2: 'PRENDE',
+                    title3: 'A ATENÇÃO.',
+                    p1: 'No mundo digital acelerado de hoje, os primeiros segundos são cruciais. Combinando técnicas avançadas de Motion Graphics com a linguagem nativa das redes sociais, transformo vídeos comuns em conteúdo viral de alta performance.',
+                    p2: 'Especialista em After Effects para animações complexas. Foco total em aumentar o watch time e o engajamento através de edições dinâmicas.',
+                    driveLinkText: 'Acessar Portfólio Completo no Drive'
+                },
+                contact: {
+                    title: 'VAMOS VIRALIZAR?',
+                    desc: 'Precisa de motion graphics impactante ou shorts que convertem? Vamos conversar.',
+                    cta: 'marteloeditor59@gmail.com'
+                },
+                footer: '© 2025 FrameX Motion & Edits. Todos os direitos reservados.'
+                },
+                en: {
+                nav: ['Services', 'About', 'Contact'],
+                hero: {
+                    subtitle: 'Motion Graphics • Shorts • Reels • Dynamic Editing',
+                    title1: 'MAXIMUM RETENTION',
+                    title2: 'FRAME BY FRAME',
+                    ctaProject: 'View Portfolio (Drive)',
+                    ctaContact: 'Get a Quote'
+                },
+                services: {
+                    items: [
+                    { title: "Motion Graphics", desc: "Animated titles, VFX and moving visual identities." },
+                    { title: "Shorts & Reels", desc: "Fast vertical editing, pop-up captions and visual hooks." },
+                    { title: "Rhythmic Editing", desc: "Perfect musical synchronization and invisible cuts." }
+                    ]
+                },
+                about: {
+                    label: '// The Editor',
+                    title1: 'CREATIVITY THAT',
+                    title2: 'GRABS',
+                    title3: 'ATTENTION.',
+                    p1: 'In today\'s fast-paced digital world, the first few seconds are crucial. Combining advanced Motion Graphics techniques with the native language of social media, I transform ordinary videos into high-performance viral content.',
+                    p2: 'Specialist in After Effects for complex animations. Total focus on increasing watch time and engagement through dynamic editing.',
+                    driveLinkText: 'Access Full Portfolio on Drive'
+                },
+                contact: {
+                    title: 'LET\'S GO VIRAL?',
+                    desc: 'Need impactful motion graphics or shorts that convert? Let\'s talk.',
+                    cta: 'marteloeditor59@gmail.com'
+                },
+                footer: '© 2025 FrameX Motion & Edits. All rights reserved.'
+                },
+                es: {
+                nav: ['Servicios', 'Sobre Mí', 'Contacto'],
+                hero: {
+                    subtitle: 'Motion Graphics • Shorts • Reels • Edición Dinámica',
+                    title1: 'RETENCIÓN MÁXIMA',
+                    title2: 'CUADRO A CUADRO',
+                    ctaProject: 'Ver Portafolio (Drive)',
+                    ctaContact: 'Presupuesto'
+                },
+                services: {
+                    items: [
+                    { title: "Motion Graphics", desc: "Títulos animados, VFX e identidades visuales en movimiento." },
+                    { title: "Shorts & Reels", desc: "Edición vertical rápida, subtítulos pop-up y ganchos visuales." },
+                    { title: "Edición Rítmica", desc: "Sincronización musical perfecta y cortes invisibles." }
+                    ]
+                },
+                about: {
+                    label: '// El Editor',
+                    title1: 'CREATIVIDAD QUE',
+                    title2: 'ATRAPA',
+                    title3: 'LA ATENCIÓN.',
+                    p1: 'En el acelerado mundo digital de hoy, los primeros segundos son cruciales. Combinando técnicas avanzadas de Motion Graphics con el lenguaje nativo de las redes sociales, transformo videos comunes en contenido viral de alto rendimiento.',
+                    p2: 'Especialista en After Effects para animaciones complejas. Enfoque total en aumentar el tiempo de visualización y el compromiso a través de ediciones dinámicas.',
+                    driveLinkText: 'Acceder al Portafolio Completo en Drive'
+                },
+                contact: {
+                    title: '¿VAMOS A VIRALIZAR?',
+                    desc: '¿Necesitas motion graphics impactantes o shorts que conviertan? Hablemos.',
+                    cta: 'marteloeditor59@gmail.com'
+                },
+                footer: '© 2025 FrameX Motion & Edits. Todos los derechos reservados.'
+                }
+            };
+
+            const servicesData = [
+                { icon: <Monitor className="w-8 h-8" />, ...content[lang].services.items[0] },
+                { icon: <Smartphone className="w-8 h-8" />, ...content[lang].services.items[1] },
+                { icon: <Scissors className="w-8 h-8" />, ...content[lang].services.items[2] },
+            ];
+
+            const navLinks = ['serviços', 'sobre', 'contato'];
+            const drivePortfolioLink = "https://drive.google.com/drive/folders/18QccIh-NtV-syyuIAWmkGsuc_12Awr09?usp=sharing";
+
+            return (
+                <div className="min-h-screen bg-neutral-950 text-neutral-100 font-sans selection:bg-white selection:text-black overflow-x-hidden">
+                {/* Film Grain Overlay */}
+                <div className="fixed inset-0 pointer-events-none opacity-[0.03] z-50 mix-blend-overlay" 
+                    style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}>
+                </div>
+
+                {/* Navbar (Alterada para sumir no topo) */}
+                <nav className={`fixed top-0 w-full z-40 transition-all duration-700 ease-in-out ${scrolled ? 'bg-black/80 backdrop-blur-md py-4 border-b border-white/10 opacity-100 translate-y-0' : 'bg-transparent py-8 opacity-0 -translate-y-4 pointer-events-none'}`}>
+                    <div className="container mx-auto px-6 flex justify-between items-center">
+                    {/* LOGO MARTELO */}
+                    <button 
+                        onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                        className="flex items-center gap-2 text-2xl font-bold tracking-tighter uppercase border-2 border-white px-3 py-1 hover:bg-white hover:text-black transition-colors duration-300 bg-transparent cursor-pointer"
+                    >
+                        <Hammer className="w-6 h-6 fill-current" />
+                        <span>MARTELO</span>
+                    </button>
+
+                    {/* Desktop Menu */}
+                    <div className="hidden md:flex items-center space-x-8">
+                        <div className="flex space-x-12 text-sm font-medium tracking-widest uppercase">
+                        {content[lang].nav.map((item, index) => (
+                            <button 
+                            key={item} 
+                            onClick={(e) => scrollToSection(e, navLinks[index])}
+                            className="hover:text-neutral-400 transition-colors relative group uppercase tracking-widest text-white decoration-0 bg-transparent border-none cursor-pointer"
+                            >
+                            {item}
+                            <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-white transition-all duration-300 group-hover:w-full"></span>
+                            </button>
+                        ))}
+                        </div>
+                        
+                        {/* Language Switcher Desktop */}
+                        <div className="flex items-center gap-2 border-l border-white/20 pl-8 ml-4">
+                        <Globe className="w-4 h-4 text-neutral-500" />
+                        {['pt', 'en', 'es'].map((l) => (
+                            <button 
+                            key={l}
+                            onClick={() => setLang(l)}
+                            className={`text-xs uppercase font-bold tracking-wider hover:text-white transition-colors bg-transparent border-none cursor-pointer ${lang === l ? 'text-white' : 'text-neutral-600'}`}
+                            >
+                            {l}
+                            </button>
+                        ))}
+                        </div>
+                    </div>
+
+                    {/* Mobile Menu Button */}
+                    <button className="md:hidden text-white bg-transparent border-none" onClick={() => setMenuOpen(!menuOpen)}>
+                        {menuOpen ? <X /> : <Menu />}
+                    </button>
+                    </div>
+                </nav>
+
+                {/* Mobile Menu Overlay */}
+                {menuOpen && (
+                    <div className="fixed inset-0 bg-neutral-950 z-30 flex flex-col justify-center items-center space-y-8 text-2xl font-light uppercase tracking-widest md:hidden">
+                    {content[lang].nav.map((item, index) => (
+                        <button 
+                        key={item} 
+                        onClick={(e) => scrollToSection(e, navLinks[index])}
+                        className="hover:text-neutral-500 transition-colors bg-transparent border-none cursor-pointer text-white"
+                        >
+                        {item}
+                        </button>
+                    ))}
+                    
+                    {/* Language Switcher Mobile */}
+                    <div className="flex gap-6 mt-8 pt-8 border-t border-white/10 w-40 justify-center">
+                        {['pt', 'en', 'es'].map((l) => (
+                        <button 
+                            key={l}
+                            onClick={() => { setLang(l); setMenuOpen(false); }}
+                            className={`text-lg uppercase font-bold bg-transparent border-none ${lang === l ? 'text-white border-b border-white' : 'text-neutral-600'}`}
+                        >
+                            {l}
+                        </button>
+                        ))}
+                    </div>
+                    </div>
+                )}
+
+                {/* Hero Section */}
+                <header className="relative min-h-screen flex items-center justify-center overflow-hidden pb-20 pt-32 md:pt-0">
+                    <div className="absolute inset-0 z-0 opacity-20">
+                    <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-transparent to-neutral-950" />
+                    {/* Imagem removida conforme solicitado */}
+                    </div>
+
+                    <div className="relative z-10 text-center px-4 max-w-4xl flex flex-col items-center">
+                    
+                    <p className="text-neutral-400 tracking-widest md:tracking-[0.3em] text-sm md:text-base mb-6 animate-pulse uppercase text-center">
+                        {content[lang].hero.subtitle}
+                    </p>
+                    <h1 className="text-5xl md:text-8xl font-bold tracking-tighter mb-8 leading-tight">
+                        {content[lang].hero.title1} <br />
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-neutral-400 to-white italic font-serif">
+                        {content[lang].hero.title2}
+                        </span>
+                    </h1>
+                    <div className="flex flex-col md:flex-row gap-6 justify-center items-center mt-12">
+                        {/* Botão principal agora leva para o Drive */}
+                        <a href={drivePortfolioLink} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-3 bg-white text-black px-8 py-4 font-bold uppercase tracking-wider hover:bg-neutral-300 transition-all duration-300 cursor-pointer border-none decoration-0">
+                        {content[lang].hero.ctaProject}
+                        <ExternalLink className="w-4 h-4 stroke-current group-hover:scale-110 transition-transform" />
+                        </a>
+                        <button onClick={(e) => scrollToSection(e, 'contato')} className="flex items-center gap-3 px-8 py-4 border border-white/30 hover:border-white hover:bg-white/5 transition-all uppercase tracking-wider text-sm bg-transparent text-white cursor-pointer decoration-0">
+                        {content[lang].hero.ctaContact}
+                        </button>
+                    </div>
+                    </div>
+
+                    <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce opacity-50">
+                    <ChevronDown className="w-8 h-8" />
+                    </div>
+                </header>
+
+                {/* Services Section */}
+                <section id="serviços" className="py-32 bg-neutral-900 border-y border-white/5 mt-12 md:mt-0">
+                    <div className="container mx-auto px-6">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left divide-y md:divide-y-0 md:divide-x divide-white/10">
+                        {servicesData.map((service, index) => (
+                        <div key={index} className="px-4 py-8 md:py-0 hover:bg-white/5 transition-colors duration-300 rounded-lg group">
+                            <div className="mb-6 inline-block p-4 border border-white/20 rounded-full group-hover:bg-white group-hover:text-black transition-all duration-300">
+                            {service.icon}
+                            </div>
+                            <h3 className="text-xl font-bold uppercase tracking-wider mb-4">{service.title}</h3>
+                            <p className="text-neutral-400 leading-relaxed text-sm">
+                            {service.desc}
+                            </p>
+                        </div>
+                        ))}
+                    </div>
+                    </div>
+                </section>
+
+                {/* About Section */}
+                <section id="sobre" className="py-24 bg-neutral-950">
+                    <div className="container mx-auto px-6 flex flex-col md:flex-row items-center gap-16">
+                    <div className="md:w-1/2 relative">
+                        <div className="absolute -inset-4 border border-white/20 z-0 translate-x-4 translate-y-4"></div>
+                        {/* IMAGEM ESTILIZADA MANTIDA */}
+                        <img 
+                        src="https://images.unsplash.com/photo-1533518463841-d62e1fc91373?q=80&w=1000&auto=format&fit=crop" 
+                        alt="Editor Profile" 
+                        className="relative z-10 w-full aspect-[4/5] object-cover grayscale contrast-125"
+                        />
+                    </div>
+                    <div className="md:w-1/2">
+                        <h2 className="text-sm font-mono text-neutral-500 mb-6 uppercase tracking-widest">{content[lang].about.label}</h2>
+                        <h3 className="text-3xl md:text-5xl font-bold leading-tight mb-8">
+                        {content[lang].about.title1} <br/>
+                        <span className="font-serif italic text-neutral-400">{content[lang].about.title2}</span> {content[lang].about.title3}
+                        </h3>
+                        <p className="text-neutral-300 mb-6 leading-relaxed">
+                        {content[lang].about.p1}
+                        </p>
+                        <p className="text-neutral-400 mb-8 leading-relaxed text-sm">
+                        {content[lang].about.p2}
+                        </p>
+                        
+                        {/* Botão para o Portfólio no Drive */}
+                        <div className="mb-8">
+                        <a href={drivePortfolioLink} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center gap-3 bg-white text-black px-6 py-3 font-bold uppercase tracking-wider hover:bg-neutral-300 transition-all duration-300 cursor-pointer border-none decoration-0 text-sm">
+                            {content[lang].about.driveLinkText}
+                            <ExternalLink className="w-4 h-4 stroke-current group-hover:scale-110 transition-transform" />
+                        </a>
+                        </div>
+
+                        <div className="flex gap-4">
+                        {['After Effects', 'CapCut'].map(tech => (
+                            <span key={tech} className="px-3 py-1 border border-white/20 text-xs uppercase tracking-wider text-neutral-400">
+                            {tech}
+                            </span>
+                        ))}
+                        </div>
+                    </div>
+                    </div>
+                </section>
+
+                {/* Contact Section */}
+                <section id="contato" className="py-32 bg-black relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-neutral-900 to-transparent opacity-30 skew-x-12 transform origin-top-right"></div>
+
+                    <div className="container mx-auto px-6 relative z-10 text-center">
+                    <h2 className="text-5xl md:text-7xl font-bold tracking-tighter mb-8">{content[lang].contact.title}</h2>
+                    <p className="text-xl text-neutral-400 mb-12 max-w-2xl mx-auto font-light">
+                        {content[lang].contact.desc}
+                    </p>
+                    
+                    <a href={`mailto:${content[lang].contact.cta}`} className="inline-flex items-center gap-4 text-3xl md:text-5xl border-b-2 border-white hover:border-neutral-500 hover:text-neutral-400 transition-all pb-2 mb-16 break-all decoration-0">
+                        <Mail className="w-8 h-8 md:w-12 md:h-12 flex-shrink-0" />
+                        <span className="text-lg md:text-4xl">{content[lang].contact.cta}</span>
+                    </a>
+
+                    <div className="flex justify-center gap-8">
+                        <a href="https://instagram.com/martelo.editor" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 px-6 py-3 border border-white/10 rounded-full hover:bg-white hover:text-black transition-all duration-300 group decoration-0">
+                        <Instagram className="w-6 h-6" />
+                        <span className="uppercase tracking-widest text-sm group-hover:font-medium">@martelo.editor</span>
+                        </a>
+                    </div>
+                    </div>
+                </section>
+
+                {/* Footer */}
+                <footer className="py-8 bg-black border-t border-white/10 text-center text-neutral-600 text-sm uppercase tracking-widest">
+                    <p>{content[lang].footer}</p>
+                </footer>
+                </div>
+            );
+        };
+
+        // Renderização da Aplicação
+        const root = createRoot(document.getElementById('root'));
+        root.render(<Portfolio />);
+    </script>
+</body>
+</html>
