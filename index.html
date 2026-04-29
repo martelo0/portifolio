@@ -481,12 +481,23 @@
                                         </a>
                                     </div>
 
-                                    <div className="flex gap-4">
-                                        {['After Effects', 'CapCut'].map(tech => (
-                                            <span key={tech} className="px-3 py-1 border border-white/20 text-xs uppercase tracking-wider text-neutral-400 hover:text-white hover:border-white/50 transition-colors cursor-default">
-                                                {tech}
-                                            </span>
-                                        ))}
+                                    <div className="flex flex-col gap-4">
+                                        <span className="text-xs font-mono text-neutral-500 uppercase tracking-widest">
+                                            {lang === 'pt' ? 'Edição & Finalização' : lang === 'en' ? 'Editing & Finishing' : 'Edición y Finalización'}
+                                        </span>
+                                        <div className="flex flex-wrap gap-3">
+                                            {/* Destaque exclusivo para o Premiere Pro */}
+                                            <div className="flex items-center gap-3 bg-white/5 border border-white/10 px-4 py-2 rounded-lg hover:bg-[#00005c]/40 hover:border-[#9999ff]/60 transition-all duration-500 group cursor-default hover:shadow-[0_0_20px_rgba(153,153,255,0.2)]">
+                                                <img 
+                                                    src="https://i.imgur.com/GLGxDnT.png" 
+                                                    alt="Adobe Premiere Pro" 
+                                                    className="w-7 h-7 object-contain group-hover:scale-110 transition-transform duration-500 rounded" 
+                                                />
+                                                <span className="text-sm font-bold text-neutral-300 group-hover:text-[#9999ff] transition-colors duration-300 tracking-wide">
+                                                    Premiere Pro
+                                                </span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </FadeInSection>
                             </div>
